@@ -21,7 +21,7 @@ func hide_dialogue():
 	emit_signal("dialogue_ui_open", false)
 	
 func set_text(text):
-	diag_text.text = text
+	diag_text.bbcode_text = text
 	
 func set_label(label):
 	if len(label) == 0:

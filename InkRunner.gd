@@ -1,13 +1,6 @@
 extends Node
 
-onready var dialogue_ui = $"../DialogueUI"
-
-func _ready():
-	call_deferred("quick_test")
-
-func quick_test():
-	select_knot("becky")
-	show_next_dialogue()
+onready var dialogue_ui = $"../UILayer/DialogueUI"
 
 func select_knot(path):
 	Ink.story.choose_path_string(path)

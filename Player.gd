@@ -21,14 +21,22 @@ func _physics_process(delta):
 		
 	velocity = move_and_slide(velocity)
 
-
-# Called when the node enters the scene tree for the first time.
-
-
+func _input(event):
+	var last_collision = null
+	if get_slide_count() - 1 >= 0:
+		last_collision = get_slide_collision(get_slide_count()-1)
+	if is_instance_valid(last_collision):
+		if event.is_action_pressed("ui_accept"):
+			var collider_knot = last_collision.get_collider().get("knot")
+			if collider_knot != null:
+				var ink_runner = $"../../InkRunner"
+				ink_runner.select_knot(collider_knot)
+				ink_runner.show_next_dialogue()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 
 func _on_DialogueUI_dialogue_ui_open(is_open):
+	set_process_input(!is_open)
 	accepting_input = !is_open

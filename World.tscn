@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://ugly_carpet_002.png" type="Texture" id=1]
 [ext_resource path="res://atable.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://uglywall.png" type="Texture" id=4]
 [ext_resource path="res://microwave.png" type="Texture" id=5]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=6]
+[ext_resource path="res://BeckyDesk.gd" type="Script" id=7]
 [ext_resource path="res://becky.png" type="Texture" id=8]
 [ext_resource path="res://ted.png" type="Texture" id=9]
 [ext_resource path="res://watercooler.png" type="Texture" id=10]
@@ -16,6 +17,7 @@
 [ext_resource path="res://DeskBody2DRight.tscn" type="PackedScene" id=15]
 [ext_resource path="res://jimbo.png" type="Texture" id=16]
 [ext_resource path="res://InkRunner.gd" type="Script" id=17]
+[ext_resource path="res://TedDesk.gd" type="Script" id=18]
 
 [sub_resource type="TileSet" id=1]
 0/name = "uglytiles.png 0"
@@ -99,11 +101,13 @@ texture = ExtResource( 8 )
 [node name="CounterBody" parent="YSort" instance=ExtResource( 12 )]
 position = Vector2( 25.1783, 40.879 )
 
-[node name="DeskBody2DLeft" parent="YSort" instance=ExtResource( 13 )]
+[node name="BeckyDesk" parent="YSort" instance=ExtResource( 13 )]
 position = Vector2( 186.066, 34.2088 )
+script = ExtResource( 7 )
 
-[node name="DeskBody2DRight" parent="YSort" instance=ExtResource( 15 )]
+[node name="TedDesk" parent="YSort" instance=ExtResource( 15 )]
 position = Vector2( 136.096, 33.4605 )
+script = ExtResource( 18 )
 
 [node name="WaterCoolerBody" type="StaticBody2D" parent="YSort"]
 
@@ -119,10 +123,12 @@ shape = SubResource( 2 )
 position = Vector2( 209.091, 33.1068 )
 texture = ExtResource( 16 )
 
-[node name="DialogueUI" parent="." instance=ExtResource( 11 )]
-
-[node name="Node" type="Node" parent="."]
+[node name="InkRunner" type="Node" parent="."]
 script = ExtResource( 17 )
-[connection signal="choice_made" from="DialogueUI" to="Node" method="_on_DialogueUI_choice_made"]
-[connection signal="dialogue_next" from="DialogueUI" to="Node" method="_on_DialogueUI_dialogue_next"]
-[connection signal="dialogue_ui_open" from="DialogueUI" to="YSort/Player" method="_on_DialogueUI_dialogue_ui_open"]
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="DialogueUI" parent="UILayer" instance=ExtResource( 11 )]
+[connection signal="choice_made" from="UILayer/DialogueUI" to="InkRunner" method="_on_DialogueUI_choice_made"]
+[connection signal="dialogue_next" from="UILayer/DialogueUI" to="InkRunner" method="_on_DialogueUI_dialogue_next"]
+[connection signal="dialogue_ui_open" from="UILayer/DialogueUI" to="YSort/Player" method="_on_DialogueUI_dialogue_ui_open"]

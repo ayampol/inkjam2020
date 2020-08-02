@@ -10,6 +10,7 @@
 [ext_resource path="res://becky.png" type="Texture" id=8]
 [ext_resource path="res://ted.png" type="Texture" id=9]
 [ext_resource path="res://watercooler.png" type="Texture" id=10]
+[ext_resource path="res://DialogueUI.tscn" type="PackedScene" id=11]
 
 [sub_resource type="TileSet" id=1]
 0/name = "uglytiles.png 0"
@@ -93,3 +94,4 @@ texture = ExtResource( 8 )
 [node name="watercooler" type="Sprite" parent="."]
 position = Vector2( 160.75, 24 )
 texture = ExtResource( 10 )
+[node name="DialogueUI" parent="." instance=ExtResource( 11 )]

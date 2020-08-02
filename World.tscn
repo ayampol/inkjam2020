@@ -5,16 +5,16 @@
 [ext_resource path="res://uglytiles.png" type="Texture" id=3]
 [ext_resource path="res://uglywall.png" type="Texture" id=4]
 [ext_resource path="res://microwave.png" type="Texture" id=5]
-[ext_resource path="res://longy.png" type="Texture" id=6]
-[ext_resource path="res://Player.gd" type="Script" id=7]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://becky.png" type="Texture" id=8]
 [ext_resource path="res://ted.png" type="Texture" id=9]
 [ext_resource path="res://watercooler.png" type="Texture" id=10]
 [ext_resource path="res://DialogueUI.tscn" type="PackedScene" id=11]
-[ext_resource path="res://counter_1.png" type="Texture" id=12]
-[ext_resource path="res://deskleft.png" type="Texture" id=13]
-[ext_resource path="res://counter_3.png" type="Texture" id=15]
-[ext_resource path="res://counter_2.png" type="Texture" id=16]
+[ext_resource path="res://CounterBody.tscn" type="PackedScene" id=12]
+[ext_resource path="res://DeskBody2DLeft.tscn" type="PackedScene" id=13]
+[ext_resource path="res://fire.png" type="Texture" id=14]
+[ext_resource path="res://DeskBody2DRight.tscn" type="PackedScene" id=15]
+[ext_resource path="res://jimbo.png" type="Texture" id=16]
 [ext_resource path="res://InkRunner.gd" type="Script" id=17]
 
 [sub_resource type="TileSet" id=1]
@@ -48,24 +48,21 @@
 1/z_index = 0
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 7.88171
-height = 0.0
+radius = 5.65134
+height = 5.47799
 
 [node name="World" type="Node2D"]
 
 [node name="fire" type="Sprite" parent="."]
-position = Vector2( 25.9685, 13.8687 )
+position = Vector2( 26.2658, 13.8687 )
 z_index = 1
-texture = ExtResource( 13 )
+texture = ExtResource( 14 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 160, 90 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 320, 180 )
-__meta__ = {
-"_edit_lock_": true
-}
+region_rect = Rect2( 0, 0, 576, 304 )
 
 [node name="YSort" type="YSort" parent="."]
 
@@ -75,21 +72,11 @@ cell_size = Vector2( 32, 32 )
 format = 1
 tile_data = PoolIntArray( -65536, 1, 0, -65535, 1, 0, -65534, 1, 0, -65533, 1, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0 )
 
-[node name="Player" type="KinematicBody2D" parent="YSort"]
-position = Vector2( 91.7064, 44.4808 )
-script = ExtResource( 7 )
-__meta__ = {
-"_edit_group_": true
-}
+[node name="Player" parent="YSort" instance=ExtResource( 6 )]
 
-[node name="Sprite" type="Sprite" parent="YSort/Player"]
-position = Vector2( 0.468216, -4.12035 )
-texture = ExtResource( 6 )
-hframes = 3
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Player"]
-position = Vector2( 0.0735855, 3.33109 )
-shape = SubResource( 2 )
+[node name="Camera2D" type="Camera2D" parent="YSort/Player"]
+current = true
+smoothing_enabled = true
 
 [node name="microwave" type="Sprite" parent="YSort"]
 position = Vector2( 24.0966, 38.971 )
@@ -109,34 +96,30 @@ texture = ExtResource( 9 )
 position = Vector2( 183.153, 33.7218 )
 texture = ExtResource( 8 )
 
-[node name="watercooler" type="Sprite" parent="YSort"]
+[node name="CounterBody" parent="YSort" instance=ExtResource( 12 )]
+position = Vector2( 25.1783, 40.879 )
+
+[node name="DeskBody2DLeft" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( 186.066, 34.2088 )
+
+[node name="DeskBody2DRight" parent="YSort" instance=ExtResource( 15 )]
+position = Vector2( 136.096, 33.4605 )
+
+[node name="WaterCoolerBody" type="StaticBody2D" parent="YSort"]
+
+[node name="watercooler" type="Sprite" parent="YSort/WaterCoolerBody"]
 position = Vector2( 160.75, 24 )
 texture = ExtResource( 10 )
 
-[node name="counter_1" type="Sprite" parent="YSort"]
-position = Vector2( 24.3102, 44.6263 )
-scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 12 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/WaterCoolerBody"]
+position = Vector2( 160.801, 30.5784 )
+shape = SubResource( 2 )
 
-[node name="counter_2" type="Sprite" parent="YSort/counter_1"]
-position = Vector2( 31.7251, -0.0910225 )
+[node name="jimbo" type="Sprite" parent="."]
+position = Vector2( 209.091, 33.1068 )
 texture = ExtResource( 16 )
 
-[node name="counter_3" type="Sprite" parent="YSort/counter_1"]
-position = Vector2( 63.3769, -0.0910263 )
-texture = ExtResource( 15 )
-
-[node name="deskleft" type="Sprite" parent="YSort"]
-position = Vector2( 184.355, 34.2634 )
-texture = ExtResource( 13 )
-
 [node name="DialogueUI" parent="." instance=ExtResource( 11 )]
-
-[node name="deskleft" type="Sprite" parent="."]
-position = Vector2( 136.149, 33.4688 )
-rotation = 6.28319
-texture = ExtResource( 13 )
-flip_h = true
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource( 17 )

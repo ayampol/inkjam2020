@@ -16,4 +16,8 @@ export_presets.cfg
 .mono/
 data_*/
 
+# Inkgd plugin and other ink ignores
+.inkgd_compiler.cfg
+story.json
+
 # End of https://www.toptal.com/developers/gitignore/api/godot

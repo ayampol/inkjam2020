@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://ChoicePanel.gd" type="Script" id=1]
 [ext_resource path="res://DialogueUI.gd" type="Script" id=2]
+[ext_resource path="res://DialogueBoxText.gd" type="Script" id=3]
 
 [sub_resource type="DynamicFontData" id=5]
 font_path = "res://FiraCode-SemiBold.ttf"
@@ -56,6 +57,7 @@ margin_bottom = 42.0
 custom_fonts/italics_font = SubResource( 6 )
 custom_fonts/normal_font = SubResource( 2 )
 bbcode_enabled = true
+script = ExtResource( 3 )
 
 [node name="NameTag" type="Label" parent="."]
 margin_left = 5.0

@@ -22,6 +22,7 @@ func hide_dialogue():
 	
 func set_text(text):
 	diag_text.bbcode_text = text
+	diag_text.set_visible_characters(0)
 	
 func set_label(label):
 	if len(label) == 0:
@@ -44,7 +45,10 @@ func _ready():
 
 func _input(event):
 	if event.is_action_pressed("ui_accept"):
-		emit_signal("dialogue_next")
+		if diag_text.get_visible_characters() < len(diag_text.text):
+			diag_text.set_visible_characters(len(diag_text.text))
+		else:
+			emit_signal("dialogue_next")
 
 func _on_ChoiceListVBox_selected(index):
 	set_process_input(true)

@@ -60,11 +60,6 @@ height = 35.7963
 
 [node name="World" type="Node2D"]
 
-[node name="fire" type="Sprite" parent="."]
-position = Vector2( 26.2658, 13.8687 )
-z_index = 1
-texture = ExtResource( 14 )
-
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 160.265, 90 )
 texture = ExtResource( 1 )
@@ -73,7 +68,14 @@ region_rect = Rect2( 0, 0, 576, 304 )
 
 [node name="YSort" type="YSort" parent="."]
 
-[node name="GroundTileMap" type="TileMap" parent="YSort"]
+[node name="fire" type="Sprite" parent="YSort"]
+position = Vector2( 26.2658, 32.3893 )
+texture = ExtResource( 14 )
+offset = Vector2( 0, -20 )
+
+[node name="KitchenFloor" type="Node2D" parent="YSort"]
+
+[node name="GroundTileMap" type="TileMap" parent="YSort/KitchenFloor"]
 tile_set = SubResource( 1 )
 cell_size = Vector2( 32, 32 )
 format = 1
@@ -85,10 +87,9 @@ tile_data = PoolIntArray( -65536, 1, 0, -65535, 1, 0, -65534, 1, 0, -65533, 1, 0
 current = true
 
 [node name="microwave" type="Sprite" parent="YSort"]
-position = Vector2( 24.0966, 38.971 )
-scale = Vector2( 0.865386, 0.906356 )
-z_index = 2
+position = Vector2( 23.2911, 42.6536 )
 texture = ExtResource( 5 )
+offset = Vector2( 0, -5 )
 
 [node name="ted" type="Sprite" parent="YSort"]
 position = Vector2( 136.833, 33.3969 )

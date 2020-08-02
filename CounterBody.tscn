@@ -4,11 +4,9 @@
 [ext_resource path="res://counter_2.png" type="Texture" id=2]
 [ext_resource path="res://counter_3.png" type="Texture" id=3]
 
-
-
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 5.32045
-height = 55.9529
+radius = 6.55789
+height = 53.1488
 
 [node name="CounterBody" type="StaticBody2D"]
 position = Vector2( 0.353561, 0 )
@@ -26,6 +24,6 @@ position = Vector2( 63.3769, -0.0910263 )
 texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 24.1989, 4.98492 )
+position = Vector2( 24.3757, 3.39392 )
 rotation = 1.5708
 shape = SubResource( 1 )

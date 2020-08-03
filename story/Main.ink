@@ -339,10 +339,10 @@ Police Officer: Who's the detective here, me or you?
 {
     - !everything_is_busted:
         It's a microwave. Yup.
-    - fish_in_microwave:
-        There is a fish spinning in the microwave. It reeks. And all the buttons are broken?
     - microwave_on_fire:
         -> firewave
+    - fish_in_microwave:
+        There is a fish spinning in the microwave. It reeks. And all the buttons are broken?
 }
 -> DONE
 

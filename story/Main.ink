@@ -163,6 +163,8 @@ VAR continuation = -> nowhere
 
 === lunch_choice ===
 
+~ continuation = -> nothing
+
 It's lunch time. The office reeks of fish for some reason. Probably Becky. Do you want to go eat lunch or work through lunch?
 
 + Eat lunch

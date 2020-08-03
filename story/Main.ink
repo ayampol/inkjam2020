@@ -1,5 +1,12 @@
 /* INITIALIZE VARIABLES */
 
+// trigger an event on change
+// TODO: watch for this in godot
+VAR EVENT = ""
+
+// trigger an event on transition
+VAR TRANSITION = ""
+
 // increased by attending meetings, doing your job, etc.
 VAR work_completed = 0
 
@@ -196,7 +203,7 @@ What is this odd case doing here? On the front, the word "TROUBLES" is crudely c
 
 { checked_on_coworkers:
     You sit down at your desk and call into your meeting.
-    >>> event morning_meeting
+    ~ EVENT = "morning_meeting"
     -> progress_hour
 - else:
     Your computer. You'll need this to get that feature out by tomorrow. But first, you should check on your co-workers.
@@ -237,7 +244,7 @@ You realize that you need some code from Dave to make any more progress on your 
         -> ending.ransomware
 
     - !blocked_by_dave:
-        >>> transition For the next hour, you work on your feature, adamantly refusing to let anything interrupt you.
+        ~ TRANSITION = "For the next hour, you work on your feature, adamantly refusing to let anything interrupt you."
         ~ temp base_work_score = 8
         { hour > 3 && !ate_lunch:
             ~ base_work_score = base_work_score / 2
@@ -258,7 +265,7 @@ Your computer. You'll need this to get that feature out by tomorrow.
 + Work on feature
     -> work_on_feature
 + Watch PeerTube
-    >>> transition You only mean to watch one video, but somehow an entire hour passes and you now know more than you ever wanted to about {&dating panthers|cooking leather products|cutting rubber balls with hot knives|the growing weasel trafficking crisis}.
+    ~ TRANSITION = "You only mean to watch one video, but somehow an entire hour passes and you now know more than you ever wanted to about {&dating panthers|cooking leather products|cutting rubber balls with hot knives|the growing weasel trafficking crisis}."
     -> progress_hour
 + Maybe later
 
@@ -289,7 +296,7 @@ Steve's dead. Rest in peace, Steve. Maybe you should call the cops or throw a bl
 + Call the police
     ~ police_called = true
     You call the police. Better off their problem than yours.
-    >>> event call_police
+    ~ EVENT = "call_police"
 + Throw a blanket over him
     { have_blanket:
         ~ have_blanket = false
@@ -350,7 +357,7 @@ There is a flaming fish in the microwave. The microwave itself is also on fire.
 + {have_fire_extinguisher && !office_on_fire} Put the fire out
     You use the fire extinguisher on the microwave. The fire goes out.
     ~ microwave_on_fire = false
-    >>> transition You've spent the entire hour running around and dealing with a fire. At least the office won't burn down now.
+    ~ TRANSITION = "You've spent the entire hour running around and dealing with a fire. At least the office won't burn down now."
     -> progress_hour
 -
 -> DONE
@@ -369,7 +376,7 @@ It's a closet. Has the word "Janitor" on it.
 The closet is locked.
 
 + {!know_janitor_code} Guess the passcode
-    >>> transition You spend the next hour guessing at the 3-digit code and finally get the closet open.
+    ~ TRANSITION = "You spend the next hour guessing at the 3-digit code and finally get the closet open."
     ~ closet_unlocked = true
     -> progress_hour
 + {know_janitor_code} Enter passcode
@@ -434,7 +441,7 @@ The water cooler is filled with gnarly green... something. You'd have to be insa
 = choices
 + Drink from it
     You drink some of the water. It's actually not so bad after all.
-    >>> event died_from_water
+    -> ending.drank_water
 + Put a warning sign on it
     { have_stationary:
         ~ water_cooler_warning = true
@@ -491,12 +498,12 @@ Becky: Good afternoon! Are you here for lunch too? I'm just heating up some fish
     Becky: Okay, so this is a little embarrassing, but I've somehow gotten the microwave door jammed. Uh, and broken all the buttons.
     Becky: Can you help me get it opened? That should make it turn off and save my fish.
     ++ "Yeah, fine."
-        >>> transition You spend the rest of your lunch hour jamming random things into the microwave door and eventually get it open with just enough time to eat your own lunch. Becky goes back to her office with a [i]very[/i] dry fish.
+        ~ TRANSITION = "You spend the rest of your lunch hour jamming random things into the microwave door and eventually get it open with just enough time to eat your own lunch. Becky goes back to her office with a [i]very[/i] dry fish."
         ~ fish_in_microwave = false
         -> progress_hour
     ++ "Nah, good luck."
 + Let Becky keep talking
-    >>> transition You patiently listen while Becky rambles about her diet, and her kids' diets, and her goldfish's diet, and something about her great, great grandfather? She talks through your entire lunch hour. At some point, the microwave catches fire. At least you manage to eat your lunch while she talks.
+    ~ TRANSITION = "You patiently listen while Becky rambles about her diet, and her kids' diets, and her goldfish's diet, and something about her great, great grandfather? She talks through your entire lunch hour. At some point, the microwave catches fire. At least you manage to eat your lunch while she talks."
     -> progress_hour
 -
 -> DONE
@@ -515,7 +522,7 @@ Becky: Oh, hello! Have you come to chat? I'm very busy today, but I do love me a
     Becky gives you some stationary.
     ~ have_stationary = true
 + Chat with becky
-    >>> transition You let Becky ramble on and on about whatever nonsense it is she does with her life for an entire hour.
+    ~ TRANSITION = "You let Becky ramble on and on about whatever nonsense it is she does with her life for an entire hour."
     -> progress_hour
 + "Sorry, no time."
 -
@@ -592,7 +599,7 @@ Dave: Hey, can ya help me out a sec?
             You don't plug in his ethernet.
     +++ Call the IT department
         You call the IT department and tell them about Dave's problem.
-        >>> transition Two IT guys arrive, dressed in hazmat suits. One puts Dave's computer under his arm. The other puts Dave under his arm. They say to follow them. You spend the next hour sorting out Dave's mess with the IT department.
+        ~ TRANSITION = "Two IT guys arrive, dressed in hazmat suits. One puts Dave's computer under his arm. The other puts Dave under his arm. They say to follow them. You spend the next hour sorting out Dave's mess with the IT department."
         ~ dave_computer_infected = false
         -> progress_hour
 + "No time, solve your own problems, man."
@@ -643,6 +650,10 @@ TODO: fill this in
 
 = office_fire
 TODO: fill this in
+-> END
+
+= drank_water
+~ EVENT = "died_from_water"
 -> END
 
 = default

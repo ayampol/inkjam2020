@@ -1,4 +1,4 @@
-extends RichTextLabel
+extends Node2D
 
 
 # Declare member variables here. Examples:
@@ -12,6 +12,5 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	if visible_characters < len(text):
-		visible_characters += 1
+#func _process(delta):
+#	pass

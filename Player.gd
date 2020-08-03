@@ -4,8 +4,12 @@ const ACCELERATION = 500
 const MAX_SPEED = 100
 const FRICTION = 500
 
+const INKRUNNER = preload("res://InkRunner.gd")
+
 var velocity = Vector2.ZERO
 var accepting_input = true
+
+onready var interactArea = $InteractArea
 
 func _physics_process(delta):
 	var input_vector = Vector2.ZERO
@@ -22,16 +26,27 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity)
 
 func _input(event):
-	var last_collision = null
-	if get_slide_count() - 1 >= 0:
-		last_collision = get_slide_collision(get_slide_count()-1)
-	if is_instance_valid(last_collision):
+	print(interactArea.get_overlapping_bodies())
+	var overlapping = interactArea.get_overlapping_bodies()
+	if (!overlapping.empty()):
+		var last_overlap = overlapping.back()
 		if event.is_action_pressed("ui_accept"):
-			var collider_knot = last_collision.get_collider().get("knot")
-			if collider_knot != null:
+			var overlap_knot = last_overlap.get("knot")
+			if (overlap_knot):
 				var ink_runner = $"../../InkRunner"
-				ink_runner.select_knot(collider_knot)
+				ink_runner.select_knot(overlap_knot)
 				ink_runner.show_next_dialogue()
+	
+#	var last_collision = null
+#	if get_slide_count() - 1 >= 0:
+#		last_collision = get_slide_collision(get_slide_count()-1)
+#	if is_instance_valid(last_collision):
+#		if event.is_action_pressed("ui_accept"):
+#			var collider_knot = last_collision.get_collider().get("knot")
+#			if collider_knot != null:
+#				var ink_runner = $"../../InkRunner"
+#				ink_runner.select_knot(collider_knot)
+#				ink_runner.show_next_dialogue()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

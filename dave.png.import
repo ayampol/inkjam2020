@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/watercooler_green_caution.png-8faf24b804b4ab930530c223ff206632.stex"
+path="res://.import/dave.png-19efd6ca998ec5afe1c979bb68d3fe4b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://watercooler_green_caution.png"
-dest_files=[ "res://.import/watercooler_green_caution.png-8faf24b804b4ab930530c223ff206632.stex" ]
+source_file="res://dave.png"
+dest_files=[ "res://.import/dave.png-19efd6ca998ec5afe1c979bb68d3fe4b.stex" ]
 
 [params]
 

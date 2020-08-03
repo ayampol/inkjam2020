@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/steve_alive.png-411aa12070ffeed7d080df9079d4a5c8.stex"
+path="res://.import/steve_all.png-f82067f3e960ab0fa84cdcd26d140be0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://steve_alive.png"
-dest_files=[ "res://.import/steve_alive.png-411aa12070ffeed7d080df9079d4a5c8.stex" ]
+source_file="res://steve_all.png"
+dest_files=[ "res://.import/steve_all.png-f82067f3e960ab0fa84cdcd26d140be0.stex" ]
 
 [params]
 

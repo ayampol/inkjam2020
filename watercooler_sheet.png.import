@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/watercooler.png-20198546a58f5d99b63003639ab8697a.stex"
+path="res://.import/watercooler_sheet.png-22447ce85c1351de7c8b29501b8e5426.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://watercooler.png"
-dest_files=[ "res://.import/watercooler.png-20198546a58f5d99b63003639ab8697a.stex" ]
+source_file="res://watercooler_sheet.png"
+dest_files=[ "res://.import/watercooler_sheet.png-22447ce85c1351de7c8b29501b8e5426.stex" ]
 
 [params]
 

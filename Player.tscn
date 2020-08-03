@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://longy.png" type="Texture" id=2]
@@ -6,6 +6,9 @@
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.14326
 height = 1.92097
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8.38731, 10.794 )
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 95.3258, 57.2828 )
@@ -20,3 +23,11 @@ hframes = 4
 position = Vector2( -0.191582, 2.09187 )
 rotation = 1.5708
 shape = SubResource( 1 )
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+position = Vector2( -0.29496, -12.3294 )
+shape = SubResource( 2 )

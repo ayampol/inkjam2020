@@ -411,6 +411,8 @@ The closet is unlocked.
         ~ have_blanket = true
         You take the fire extinguisher and the blanket.
     ++ Leave
+    --
+    -> DONE
 + Leave
 -
 -> DONE

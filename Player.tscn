@@ -3,8 +3,6 @@
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://longy.png" type="Texture" id=2]
 
-
-
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.14326
 height = 1.92097
@@ -16,7 +14,7 @@ script = ExtResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0.379829, -8.98171 )
 texture = ExtResource( 2 )
-hframes = 3
+hframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -0.191582, 2.09187 )

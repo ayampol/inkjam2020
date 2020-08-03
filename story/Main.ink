@@ -344,6 +344,7 @@ Police Officer: Who's the detective here, me or you?
     - microwave_on_fire:
         -> firewave
 }
+-> DONE
 
 = firewave
 

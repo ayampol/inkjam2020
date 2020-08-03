@@ -128,6 +128,12 @@ func firewaveorno(_varName, newVal):
 
 func printTheHour(varName, newVal):
 	label.text = str(newVal + 9) + ":00"
+
+func beckyAtMicrowave(_varName, newVal):
+	if newVal:
+		beckySprite.set_position(lunch_location["becky"])
+	else:
+		beckySprite.set_position(office_location["becky"])
 	
 	
 

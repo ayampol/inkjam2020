@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 const ACCELERATION = 500
-const MAX_SPEED = 100
+const MAX_SPEED = 200
 const FRICTION = 500
 
 const INKRUNNER = preload("res://InkRunner.gd")

@@ -8,6 +8,8 @@ onready var steveSprite = $steve
 onready var canvas = $CanvasModulate
 onready var tween = $CanvasModulate/Tween
 onready var ui = $"../UILayer"
+onready var label = $"../UILayer/PanelContainer/RichTextLabel"
+onready var fire = $fire
 var copper #Not created until we have the cop
 const copScene = preload("res://CopStatic2D.tscn")
 
@@ -96,13 +98,13 @@ func sendToOffices():
 	jimSprite.set_position(office_location["jim"])
 	
 
-func thingsGoneToShit(variable_name, new_value):
+func thingsGoneToShit(_variable_name, _new_value):
 	watercooler.set_frame(1)
 	box.set_frame(1)
 	kill_steve()
 	sendToOffices()
 	
-func warningSignCooler():
+func warningSignCooler(_varName, _newVal):
 	watercooler.set_frame(3)
 
 func cautionTapeCooler():
@@ -115,10 +117,17 @@ func kill_steve():
 func cover_steve(_varname, _newVal):
 	steveSprite.set_frame(2)
 	
-func callCops(varName, newVal):
+func callCops(_varName, _newVal):
 	cautionTapeCooler()
 	copper = copScene.instance()
 	copper.position = death_location["dave"]
 	add_child(copper)
+	
+func firewaveorno(_varName, newVal):
+	fire.visible = newVal
+
+func printTheHour(varName, newVal):
+	label.text = str(newVal + 9) + ":00"
+	
 	
 

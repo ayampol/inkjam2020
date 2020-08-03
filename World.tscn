@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=73 format=2]
 
 [ext_resource path="res://ugly_carpet.png" type="Texture" id=1]
 [ext_resource path="res://atable.png" type="Texture" id=2]
@@ -32,6 +32,8 @@
 [ext_resource path="res://DeskBody2D.gd" type="Script" id=30]
 [ext_resource path="res://WaterCoolerBody.gd" type="Script" id=31]
 [ext_resource path="res://steve.gd" type="Script" id=32]
+[ext_resource path="res://JanitorCloset.gd" type="Script" id=33]
+[ext_resource path="res://closetdoor.png" type="Texture" id=34]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -335,39 +337,49 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 } ]
 4/z_index = 0
 
-[sub_resource type="RectangleShape2D" id=33]
+[sub_resource type="RectangleShape2D" id=27]
 extents = Vector2( 14.9359, 26.6302 )
 
-[sub_resource type="RectangleShape2D" id=29]
+[sub_resource type="RectangleShape2D" id=28]
 extents = Vector2( 9.3353, 15.5446 )
+
+[sub_resource type="RectangleShape2D" id=29]
+extents = Vector2( 17.1639, 17.4781 )
 
 [sub_resource type="RectangleShape2D" id=30]
 extents = Vector2( 7.88875, 15.6345 )
 
-[sub_resource type="RectangleShape2D" id=32]
+[sub_resource type="RectangleShape2D" id=31]
 extents = Vector2( 9.01305, 16.4578 )
 
-[sub_resource type="CapsuleShape2D" id=27]
+[sub_resource type="CapsuleShape2D" id=32]
 radius = 5.65134
 height = 3.4796
 
-[sub_resource type="CapsuleShape2D" id=34]
+[sub_resource type="CapsuleShape2D" id=33]
 radius = 8.46239
 height = 15.5222
 
-[sub_resource type="CapsuleShape2D" id=28]
+[sub_resource type="CapsuleShape2D" id=34]
 radius = 7.0451
 height = 35.7963
 
-[sub_resource type="RectangleShape2D" id=31]
-extents = Vector2( 8.81525, 15.2397 )
+[sub_resource type="RectangleShape2D" id=35]
+extents = Vector2( 8.81525, 11.7438 )
 
-[sub_resource type="CapsuleShape2D" id=35]
+[sub_resource type="CapsuleShape2D" id=36]
+
+[sub_resource type="DynamicFontData" id=37]
+font_path = "res://FiraCode-Retina.ttf"
+
+[sub_resource type="DynamicFont" id=38]
+size = 8
+font_data = SubResource( 37 )
 
 [node name="World" type="Node2D"]
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -92.697, -61.3854 )
+position = Vector2( -92.447, -61.3854 )
 texture = ExtResource( 1 )
 centered = false
 region_enabled = true
@@ -377,6 +389,7 @@ region_rect = Rect2( 0, 0, 896, 480 )
 script = ExtResource( 23 )
 
 [node name="fire" type="Sprite" parent="YSort"]
+visible = false
 position = Vector2( -40.0325, 21.6864 )
 texture = ExtResource( 14 )
 offset = Vector2( 0, -20 )
@@ -404,10 +417,11 @@ script = ExtResource( 27 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/microwave/StaticBody2D"]
 position = Vector2( 1.98425, -15.6756 )
-shape = SubResource( 33 )
+shape = SubResource( 27 )
 
 [node name="CounterBody" parent="YSort" instance=ExtResource( 12 )]
 position = Vector2( -45.2822, 27.7977 )
+script = ExtResource( 27 )
 
 [node name="becky" type="Sprite" parent="YSort"]
 position = Vector2( 218.03, 102.678 )
@@ -422,6 +436,23 @@ script = ExtResource( 26 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/becky/Area2D"]
 position = Vector2( -0.396851, 0.396851 )
+shape = SubResource( 28 )
+
+[node name="closetdoor" type="Sprite" parent="YSort"]
+position = Vector2( 142.843, 4.00214 )
+scale = Vector2( 1, 1.00737 )
+texture = ExtResource( 34 )
+offset = Vector2( 0, -20 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Area2D" type="StaticBody2D" parent="YSort/closetdoor"]
+position = Vector2( 0.707901, 17.4617 )
+script = ExtResource( 33 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/closetdoor/Area2D"]
+position = Vector2( -0.471909, -32.0917 )
 shape = SubResource( 29 )
 
 [node name="steve" type="Sprite" parent="YSort"]
@@ -448,7 +479,7 @@ script = ExtResource( 24 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/dave/StaticBody2D"]
 position = Vector2( 0.198425, 0.793701 )
-shape = SubResource( 32 )
+shape = SubResource( 31 )
 
 [node name="DaveDesk" parent="YSort" instance=ExtResource( 15 )]
 position = Vector2( 494.683, 7.62444 )
@@ -467,7 +498,7 @@ hframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/WaterCoolerBody"]
 position = Vector2( -0.00619507, 1.17875 )
-shape = SubResource( 27 )
+shape = SubResource( 32 )
 
 [node name="JimDesk" parent="YSort" instance=ExtResource( 13 )]
 position = Vector2( 560.276, 6.24216 )
@@ -478,7 +509,7 @@ script = ExtResource( 28 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/JimDesk/StaticBody2D"]
 position = Vector2( -2.25, 7.625 )
 rotation = 1.5708
-shape = SubResource( 34 )
+shape = SubResource( 33 )
 
 [node name="BoxNode2D" type="Node2D" parent="YSort"]
 position = Vector2( 171.122, 98.8517 )
@@ -503,7 +534,7 @@ texture = ExtResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/DeskBody2D"]
 position = Vector2( -0.15617, 11.9104 )
 rotation = 1.5708
-shape = SubResource( 28 )
+shape = SubResource( 34 )
 
 [node name="jimbo" type="Sprite" parent="YSort"]
 position = Vector2( 190.143, 88.2267 )
@@ -513,7 +544,8 @@ texture = ExtResource( 16 )
 script = ExtResource( 25 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/jimbo/StaticBody2D"]
-shape = SubResource( 31 )
+position = Vector2( -0.530334, -3.71232 )
+shape = SubResource( 35 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="YSort"]
 
@@ -526,7 +558,7 @@ script = ExtResource( 29 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/YourDesk"]
 position = Vector2( 0.841797, 6.45416 )
 rotation = 1.5708
-shape = SubResource( 35 )
+shape = SubResource( 36 )
 
 [node name="InkRunner" type="Node" parent="."]
 script = ExtResource( 17 )
@@ -534,6 +566,23 @@ script = ExtResource( 17 )
 [node name="UILayer" type="CanvasLayer" parent="."]
 
 [node name="DialogueUI" parent="UILayer" instance=ExtResource( 11 )]
+
+[node name="PanelContainer" type="PanelContainer" parent="UILayer"]
+margin_left = 0.904205
+margin_top = 1.19859
+margin_right = 58.9042
+margin_bottom = 26.1986
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="Label" parent="UILayer/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 51.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 38 )
+text = "9:00"
 [connection signal="choice_made" from="UILayer/DialogueUI" to="InkRunner" method="_on_DialogueUI_choice_made"]
 [connection signal="dialogue_next" from="UILayer/DialogueUI" to="InkRunner" method="_on_DialogueUI_dialogue_next"]
 [connection signal="dialogue_ui_open" from="UILayer/DialogueUI" to="YSort/Player" method="_on_DialogueUI_dialogue_ui_open"]

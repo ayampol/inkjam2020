@@ -11,6 +11,8 @@ func inkirup():
 	Ink.story.observe_variable("water_cooler_warning", ysort, "warningSignCooler")
 	Ink.story.observe_variable("everything_is_busted", ysort, "thingsGoneToShit")
 	Ink.story.observe_variable("police_called", ysort, "callCops")
+	Ink.story.observe_variable("microwave_on_fire", ysort, "firewaveorno")
+	Ink.story.observe_variable("hour", ysort, "printTheHour")
 
 func select_knot(path):
 	Ink.story.choose_path_string(path)

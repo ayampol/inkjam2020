@@ -197,6 +197,7 @@ What is this odd case doing here? On the front, the word "TROUBLES" is crudely c
 { checked_on_coworkers:
     You sit down at your desk and call into your meeting.
     >>> event morning_meeting
+    -> progress_hour
 - else:
     Your computer. You'll need this to get that feature out by tomorrow. But first, you should check on your co-workers.
 }

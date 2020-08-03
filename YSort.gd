@@ -70,8 +70,8 @@ func relocateOnProgress():
 	words.set_text("Wow words")
 	words.set_visible_characters(5)
 #	screenFadeOut()
-	thingsGoneToShit()
-	callCops()
+	thingsGoneToShit("hat", true)
+	callCops("yeP", true)
 
 func screenFadeOut():
 	var time = 1
@@ -96,7 +96,7 @@ func sendToOffices():
 	jimSprite.set_position(office_location["jim"])
 	
 
-func thingsGoneToShit():
+func thingsGoneToShit(variable_name, new_value):
 	watercooler.set_frame(1)
 	box.set_frame(1)
 	kill_steve()
@@ -112,10 +112,10 @@ func kill_steve():
 	steveSprite.set_frame(1)
 	steveSprite.set_position(death_location["steve"])
 
-func cover_steve():
+func cover_steve(_varname, _newVal):
 	steveSprite.set_frame(2)
 	
-func callCops():
+func callCops(varName, newVal):
 	cautionTapeCooler()
 	copper = copScene.instance()
 	copper.position = death_location["dave"]

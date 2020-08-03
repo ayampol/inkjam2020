@@ -16,6 +16,9 @@ VAR have_blanket = false
 // TODO: in godot, add listener for when this changes
 VAR blanket_steve = false
 
+// you have the fire extinguisher
+VAR have_fire_extinguisher = false
+
 // you have stationary in your possession
 VAR have_stationary = false
 
@@ -25,6 +28,9 @@ VAR water_cooler_warning = false
 
 // do you know the code to the janitor closet
 VAR know_janitor_code = false
+
+// have you unlocked the closet
+VAR closet_unlocked = false
 
 // you want to put a sign on the water cooler
 VAR need_stationary = false
@@ -39,6 +45,7 @@ VAR is_lunch = false
 VAR fish_in_microwave = false
 
 // is the microwave on fire?
+// TODO: in godot, add listener for when this changes
 VAR microwave_on_fire = false
 
 // is the office on fire?
@@ -68,41 +75,50 @@ VAR checked_on_coworkers = false
 // did you eat lunch?
 VAR ate_lunch = false
 
-/* FUNCTIONS */
+// where to go after a transition
+VAR continuation = -> nowhere
 
-=== function progress_hour ===
+/* ROUTER */
+
+=== progress_hour ===
+
+~ hour = hour + 1
 
 { hour:
 // 9:00 -> 10:00
-- 0:
+- 1:
     // set initial flag for everything to go wrong
     ~ everything_is_busted = true
     // Dave manages to infect his computer while you're in a meeting
     ~ dave_computer_infected = true
 
 // 10:00 -> 11:00
-- 1:
+- 2:
 
 // 11:00 -> 12:00
 // transition to lunch
-- 2:
-     // player can either work through lunch or go to caf, but not both
-    ~ is_lunch = true
+- 3:
+    // direct player to choice about working or not through lunch
+    ~ continuation = -> lunch_choice
     // becky microwaving fish
     ~ fish_in_microwave = true
 
 // 12:00 -> 13:00
-- 3:
+- 4:
     // it's no longer lunch
     ~ is_lunch = false
     // if the fish is still in the microwave, it catches on fire
     ~ microwave_on_fire = fish_in_microwave
 
 // 13:00 -> 14:00
-- 4:
+- 5:
     // if the microwave is still on fire, the office catches on fire
     // this is a game over
     ~ office_on_fire = microwave_on_fire
+    // redirect to potential office fire ending
+    { office_on_fire:
+        ~ continuation = -> ending.office_fire
+    }
     // At 14:00, you realize you need something from Dave to get any more work done
     // If you've already sorted his ransomware problem, he's already sent you the code
     ~ blocked_by_dave = true
@@ -117,26 +133,40 @@ VAR ate_lunch = false
     // in all other cases, he just goes back to his desk without doing anything
 
 // 14:00 -> 15:00
-- 5:
+- 6:
     // if Dave is alive and his computer is still infected, he plugs
     // in his ethernet and spreads it to the whole network
-    // TODO: probably a game over?
     ~ porn_virus_unleashed = !dave_is_dead && dave_computer_infected
 
 // 15:00 -> 16:00
-- 6:
-
-// 16:00 -> 17:00
 - 7:
 
-// 17:00 -> end?
-// TODO: Do we want this one?
+// 16:00 -> 17:00
+// end of day
 - 8:
+    ~ continuation = -> ending.default
 }
+-> DONE
 
-~ hour = hour + 1
+// Dummy knot for null continuation
+=== nowhere ===
+-> DONE
+
+// Router to come back to after a transition/progress_hour
+=== continue ===
+-> continuation
 
 /* CONTENT */
+
+=== lunch_choice ===
+
+It's lunch time. The office reeks of fish for some reason. Probably Becky. Do you want to go eat lunch or work through lunch?
+
++ Eat lunch
+    ~ is_lunch = true
++ Work through lunch
+-
+-> DONE
 
 === intro ===
 
@@ -215,7 +245,7 @@ You realize that you need some code from Dave to make any more progress on your 
             ~ base_work_score = base_work_score / 4
         }
         ~ work_completed = work_completed + base_work_score
-        ~ progress_hour()
+        -> progress_hour
     - else: -> blocked
 }
 -> DONE
@@ -228,7 +258,7 @@ Your computer. You'll need this to get that feature out by tomorrow.
     -> work_on_feature
 + Watch PeerTube
     >>> transition You only mean to watch one video, but somehow an entire hour passes and you now know more than you ever wanted to about {&dating panthers|cooking leather products|cutting rubber balls with hot knives|the growing weasel trafficking crisis}.
-    ~ progress_hour()
+    -> progress_hour
 + Maybe later
 
 -
@@ -303,14 +333,80 @@ Police Officer: Who's the detective here, me or you?
 
 === microwave ===
 
-TODO: fill this in
+{
+    - !everything_is_busted:
+        It's a microwave. Yup.
+    - fish_in_microwave:
+        There is a fish spinning in the microwave. It reeks. And all the buttons are broken?
+    - microwave_on_fire:
+        -> firewave
+}
 
+= firewave
+
+There is a flaming fish in the microwave. The microwave itself is also on fire.
+
++ {have_fire_extinguisher && !office_on_fire} Put the fire out
+    You use the fire extinguisher on the microwave. The fire goes out.
+    ~ microwave_on_fire = false
+    >>> transition You've spent the entire hour running around and dealing with a fire. At least the office won't burn down now.
+    -> progress_hour
+-
 -> DONE
 
 === janitor_closet ===
 
-TODO: fill this in
+It's a closet. Has the word "Janitor" on it.
 
+{
+    - closet_unlocked: -> unlocked
+    - else: -> locked
+}
+
+= locked
+
+The closet is locked.
+
++ {!know_janitor_code} Guess the passcode
+    >>> transition You spend the next hour guessing at the 3-digit code and finally get the closet open.
+    ~ closet_unlocked = true
+    -> progress_hour
++ {know_janitor_code} Enter passcode
+    You enter the passcode Jimmy gave you and the door opens.
+    ~ closet_unlocked = true
++ Leave
+-
+-> DONE
+
+=  unlocked
+
+The closet is unlocked.
+
++ Look inside
+    You look inside the closet. There are a bunch of ritual candles, a goat's head, some jars of blood, and surprisingly few cleaning supplies.
+    {
+        - have_fire_extinguisher && have_blanket:
+            There is nothing useful inside.
+        - have_fire_extinguisher:
+            There is a blanket bunched up in the corner.
+        - have_blanket:
+            There is a fire extinguisher behind the candles.
+        - else:
+            There is a fire extinguisher behind the candles and a blanket bunched up in the corner.
+    }
+    ++ {!have_fire_extinguisher} Take fire extinguisher
+        ~ have_fire_extinguisher = true
+        You take the fire extinguisher.
+    ++ {!have_blanket} Take blanket
+        ~ have_blanket = true
+        You take the blanket.
+    ++ {!have_fire_extinguisher && !have_blanket} Take both
+        ~ have_fire_extinguisher = true
+        ~ have_blanket = true
+        You take the fire extinguisher and the blanket.
+    ++ Leave
++ Leave
+-
 -> DONE
 
 === water_cooler ===
@@ -396,11 +492,11 @@ Becky: Good afternoon! Are you here for lunch too? I'm just heating up some fish
     ++ "Yeah, fine."
         >>> transition You spend the rest of your lunch hour jamming random things into the microwave door and eventually get it open with just enough time to eat your own lunch. Becky goes back to her office with a [i]very[/i] dry fish.
         ~ fish_in_microwave = false
-        ~ progress_hour()
+        -> progress_hour
     ++ "Nah, good luck."
 + Let Becky keep talking
     >>> transition You patiently listen while Becky rambles about her diet, and her kids' diets, and her goldfish's diet, and something about her great, great grandfather? She talks through your entire lunch hour. At some point, the microwave catches fire. At least you manage to eat your lunch while she talks.
-    ~ progress_hour()
+    -> progress_hour
 -
 -> DONE
 
@@ -413,13 +509,13 @@ Becky: I don't think it's quite done yet.
 
 Becky: Oh, hello! Have you come to chat? I'm very busy today, but I do love me a quick conversation to break up the monotony.
 
-* ((need_stationary && !have_stationary)) "Can I borrow a marker, some paper, and some tape?"
+* {need_stationary && !have_stationary} "Can I borrow a marker, some paper, and some tape?"
     Becky: Sure! Here you go.
     Becky gives you some stationary.
     ~ have_stationary = true
 + Chat with becky
     >>> transition You let Becky ramble on and on about whatever nonsense it is she does with her life for an entire hour.
-    ~ progress_hour()
+    -> progress_hour
 + "Sorry, no time."
 -
 -> DONE
@@ -497,7 +593,7 @@ Dave: Hey, can ya help me out a sec?
         You call the IT department and tell them about Dave's problem.
         >>> transition Two IT guys arrive, dressed in hazmat suits. One puts Dave's computer under his arm. The other puts Dave under his arm. They say to follow them. You spend the next hour sorting out Dave's mess with the IT department.
         ~ dave_computer_infected = false
-        ~ progress_hour()
+        -> progress_hour
 + "No time, solve your own problems, man."
     Dave: Okay.
 -
@@ -541,6 +637,13 @@ Jimmy: Hey. Can't wait 'til the weekend, right?
 === ending ===
 
 = ransomware
+TODO: fill this in
+-> END
 
+= office_fire
+TODO: fill this in
+-> END
+
+= default
 TODO: fill this in
 -> END

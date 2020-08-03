@@ -644,11 +644,19 @@ Jimmy: Hey. Can't wait 'til the weekend, right?
 === ending ===
 
 = ransomware
-TODO: fill this in
+The whole office has been infected by ransomware, so any work you've done today has been lost.
+
+Your feature will not be delivered on time.
+
+GAME OVER.
 -> END
 
 = office_fire
-TODO: fill this in
+The office has burned down as has all the work you've done today.
+
+Your feature will not be delivered on time.
+
+GAME OVER.
 -> END
 
 = drank_water
@@ -657,5 +665,17 @@ You died.
 -> END
 
 = default
-TODO: fill this in
+{
+    - work_completed > 13:
+        You worked very hard and managed to complete your feature. Congrats!
+
+        YOU WIN!
+    - work_completed > 8:
+        Well, you tried, but your feature is still getting delayed. The pressure's on, but you still have a job.
+        GOOD ENOUGH!
+    - else:
+        You barely got any work done today and your manager has noticed. You've been fired!
+
+        BACK TO FLIPPING BURGERS!
+}
 -> END
